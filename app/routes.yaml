@@ -1,0 +1,10 @@
+# Routes de l'application
+routes:
+
+# Exemple d'une route
+#  helper_route:
+#    method: 'GET|POST'
+#    path: '/test'
+#    class: FakeNamespace\MySuperBlog\Controller\FakeController#fakeMethod
+#    action: test
+#    name: test_page
