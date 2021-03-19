@@ -4,21 +4,29 @@ namespace Root;
 use Symfony\Component\HttpFoundation\Request;
 use AltoRouter;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
 
 class Application
 {
     private $request;
     private $response;
 
+    private $entityManager;
+
     private $router;
     private $config;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request = null)
     {
-        $this->request = $request;
-        $this->response = new Response();
+        // S'il y a une requête alors on le traite
+        if($request)
+        {
+            $this->request = $request;
+            $this->response = new Response();
+        }
 
-        $this->config = yaml_parse_file('../app/env.yaml')['config'];
+        $this->config = yaml_parse_file($this->getRootDir().'/env.yaml')['config'];
     }
 
     /**
@@ -28,7 +36,8 @@ class Application
     public function process()
     {
         $this->router = new AltoRouter();
-        $this->loadRoutesConfiguration('../app/routes.yaml');
+        $this->loadRoutesConfiguration($this->getRootDir().'/routes.yaml');
+        $this->loadEntityManagerConfiguration();
 
         $match = $this->router->match();
 
@@ -135,6 +144,40 @@ class Application
                 );
             }
         }
+    }
+
+    public function loadEntityManagerConfiguration()
+    {
+        if($this->config['database'] && $this->config['orm'])
+        {
+            $debug = $this->config['env'] === 'dev'; // Si l'environnement 'dev' est actif, alors on active le mode débuggage
+            $entityPath = [];
+
+            //On redéfini le chemin pour les entités
+            foreach ($this->config['orm']['entity_path'] as $key => $entity_path)
+            {
+                $entityPath[$key] =  $this->getRootDir().$entity_path;
+            }
+
+
+            $config = Setup::createAnnotationMetadataConfiguration($entityPath,$debug,null, null, false);
+            try {
+                return $this->entityManager = EntityManager::create($this->config['database'], $config);
+            } catch (\Doctrine\ORM\ORMException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+
+    }
+
+    /**
+     * Fonction qui nous retourne le chemin du dossier courant
+     * @return string
+     */
+    public function getRootDir()
+    {
+        return __DIR__;
     }
 
 }
