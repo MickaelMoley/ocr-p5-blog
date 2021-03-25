@@ -1,0 +1,23 @@
+{
+    "name": "mickaelmoley/ocr-p5-blog",
+    "description": "Simple blog based PHP",
+    "type": "project",
+    "authors": [
+        {
+            "name": "MickaelMoley",
+            "email": "mickael.moley@outlook.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Root\\": "app/",
+            "App\\": "src/"
+        }},
+    "require": {
+        "symfony/http-foundation": "^5.2",
+        "symfony/var-dumper": "^5.2",
+        "twig/twig": "^3.3",
+        "altorouter/altorouter": "^2.0",
+        "doctrine/orm": "^2.8"
+    }
+}
