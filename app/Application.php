@@ -57,7 +57,7 @@ class Application
             // S'il y a un match alors on appellera la configuration de la route
             list($controller, $action) = explode('#', $match['target']);
 
-            $controller = new $controller($this->dependencies);
+            $controller = new $controller($this->dependencies, $this->request, $this->response);
 
             if(is_callable(array($controller, $action)))
             {
@@ -149,6 +149,7 @@ class Application
                 );
             }
         }
+        $this->dependencies['router'] = $this->router;
     }
 
     public function loadEntityManagerConfiguration()
@@ -167,7 +168,7 @@ class Application
 
             $config = Setup::createAnnotationMetadataConfiguration($entityPath,$debug,null, null, false);
             try {
-                return $this->entityManager = EntityManager::create($this->config['database'], $config);
+                return $this->dependencies['entityManager'] = EntityManager::create($this->config['database'], $config);
             } catch (\Doctrine\ORM\ORMException $e) {
                 echo $e->getMessage();
             }
