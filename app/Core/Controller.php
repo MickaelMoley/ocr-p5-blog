@@ -39,10 +39,15 @@ class Controller
      * @param $template
      * @param null $parameter
      */
-    public function render($template, $parameter = null): Response
+    public function render($template, $parameter = null)
     {
         try {
+
             $content = $this->get('twig')->render($template, $parameter);
+            $response = new Response();
+            $response->setContent($content);
+            $response->setStatusCode(200);
+            return $response;
         }
         catch (LoaderError | RuntimeError | SyntaxError $exception)
         {
@@ -58,7 +63,6 @@ class Controller
         {
             return new Response($exception->getMessage(), 500);
         }
-        return $content;
     }
 
     /*

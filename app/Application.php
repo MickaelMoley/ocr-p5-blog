@@ -27,7 +27,6 @@ class Application
         if($request)
         {
             $this->request = $request;
-            $this->response = new Response();
         }
 
         $this->config = yaml_parse_file($this->getRootDir().'/env.yaml')['config'];
@@ -50,6 +49,7 @@ class Application
         if($match === false)
         {
             // S'il n'y a pas de match alors on affichera une erreur 404
+            $this->response = new Response();
             $this->response->setContent("Page Not Found");
             $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
             $this->response->headers->set("Content-Type", "text/html");
@@ -62,28 +62,7 @@ class Application
 
             if(is_callable(array($controller, $action)))
             {
-                $content = call_user_func_array(array($controller, $action), $match['params']);
-
-                /**
-                 * Si le retour de la fonction est de type "Response" alors on le défini directement à la variable 'self::reponse'
-                 * Cas d'utilisation :
-                 * - Requête AJAX
-                 * - Réponse directe
-                 */
-                if(gettype($content) === 'object')
-                {
-                    $this->response = $content;
-                }
-                /**
-                 * Si le retour de la fonction est de type "string", c'est une page
-                 * on le défini dans le contenu dans la reponse déjà instanciée
-                 * Cas d'utilisation :
-                 * - Une page contenant de HTML (twig)
-                 */
-                else if(gettype($content) === 'string')
-                {
-                    $this->response->setContent($content);
-                }
+                $this->response = call_user_func_array(array($controller, $action), $match['params']);
             }
             /**
              * Dans le cas où les arguments ne peuvent pas être appelés comme une fonction
@@ -93,6 +72,7 @@ class Application
                 // On affiche une page d'erreur avec la description de l'erreur si on est en dev
                 if($this->config['app']['env'] === 'dev')
                 {
+                    $this->response = new Response();
                     $this->response->setContent('Error: cannot call ' . get_class($controller) . '#' . $action);
                     $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
 
@@ -100,6 +80,7 @@ class Application
                 }
                 else {
                     // On affiche une page d'erreur 500 si on est en prod
+                    $this->response = new Response();
                     $this->response->setContent('Erreur 500.');
                     $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
                     $this->response->headers->set('Content-Type', 'text/html');
