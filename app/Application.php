@@ -17,6 +17,8 @@ class Application
     private $router;
     private $config;
 
+    private $dependencies = [];
+
     public function __construct(Request $request = null)
     {
         // S'il y a une requête alors on le traite
@@ -52,7 +54,7 @@ class Application
             // S'il y a un match alors on appellera la configuration de la route
             list($controller, $action) = explode('#', $match['target']);
 
-            $controller = new $controller();
+            $controller = new $controller($this->dependencies);
 
             if(is_callable(array($controller, $action)))
             {
