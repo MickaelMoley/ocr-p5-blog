@@ -31,6 +31,7 @@ class Application
         }
 
         $this->config = yaml_parse_file($this->getRootDir().'/env.yaml')['config'];
+        $this->dependencies['env'] = $this->config['env'];
     }
 
     /**
