@@ -1,6 +1,7 @@
 <?php
 namespace Root;
 
+use Doctrine\Common\Cache\FilesystemCache;
 use Symfony\Component\HttpFoundation\Request;
 use AltoRouter;
 use Symfony\Component\HttpFoundation\Response;
@@ -148,7 +149,7 @@ class Application
             }
 
 
-            $config = Setup::createAnnotationMetadataConfiguration($entityPath,$debug,null, null, false);
+            $config = Setup::createAnnotationMetadataConfiguration($entityPath,$debug,$this->getRootDir().$this->config['orm']['proxy_path'], new FilesystemCache($this->getRootDir().$this->config['orm']['cache_path']), false);
             try {
                 return $this->dependencies['entityManager'] = EntityManager::create($this->config['database'], $config);
             } catch (\Doctrine\ORM\ORMException $e) {

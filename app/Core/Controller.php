@@ -20,11 +20,10 @@ class Controller
     protected $response;
     protected $dependencies;
 
-    public function __construct($dependencies, Request $request, Response $response)
+    public function __construct($dependencies, Request $request)
     {
         $this->dependencies = $dependencies;
         $this->request = $request;
-        $this->response = $response;
     }
 
     public function getEnvironment()
