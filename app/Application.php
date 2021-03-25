@@ -6,6 +6,8 @@ use AltoRouter;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class Application
 {
@@ -40,6 +42,7 @@ class Application
         $this->router = new AltoRouter();
         $this->loadRoutesConfiguration($this->getRootDir().'/routes.yaml');
         $this->loadEntityManagerConfiguration();
+        $this->loadTwig();
 
         $match = $this->router->match();
 
@@ -173,6 +176,26 @@ class Application
 
     }
 
+    public function loadTwig()
+    {
+
+        $paths = [];
+        foreach ($this->config['twig']['paths'] as $path)
+        {
+            array_push($paths,$this->getRootDir().$path);
+        }
+
+        $loader = new FilesystemLoader($paths);
+        $twig = new Environment($loader, [
+            'cache' => $this->getRootDir().$this->config['twig']['cache_path'],
+            'debug' => $this->config['env'] === 'dev'
+        ]);
+
+        /*
+         * Je l'ajoute à ma liste de dépendances
+         */
+        $this->dependencies['twig'] = $twig;
+    }
     /**
      * Fonction qui nous retourne le chemin du dossier courant
      * @return string
