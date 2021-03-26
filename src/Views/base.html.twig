@@ -34,7 +34,37 @@
         {% endblock stylesheets %}
     </head>
     <body>
-    
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md fixed-top">
+            <div class="container"><a class="navbar-brand" href="#">Mon Blog</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link {% if route.name == 'home_page' %} active {% endif %}" href="/">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link {% if route.name == 'list_front_post' %} active {% endif %}" href="/post/list">Blog</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav mx-aut">
+                        {% if user is defined and user is not null%}
+                            <li class="nav-item">
+                                <a href="/logout" class="nav-link text-danger">Se déconnecter</a>
+                            </li>
+
+
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="/login" class="nav-link">Se connecter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/register" class="nav-link">S'inscrire</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="/contact" class="btn btn-primary">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     {% block body %}{% endblock body %}
 

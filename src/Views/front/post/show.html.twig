@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="../../assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/fonts/fontawesome5-overrides.min.css">
+
+    <style>
+        @media screen and (min-width: 768px) {
+            .nav-item {
+                position: relative;
+            }
+            .nav-link.active:before
+            {
+                content: '';
+                width: 0.45rem;
+                height: 0.45rem;
+                background: #333;
+                position: absolute;
+                border-radius: 50%;
+                bottom: -0.45rem;
+                left: calc(50% - (0.45rem / 2))
+            }
+        }
+    </style>
+    <style>
+        .text_content {
+            color: #374151;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block body %}
+    <section>
+        <div class="container">
+            <div class="row py-5">
+                <div class="col text-center"><span>{{ post.updatedAt|date('d M Y à H:i') }}</span>
+                    <h1 class="text-dark font-weight-bold">{{ post.title }}</h1>
+                    <div class="py-4 px-2 d-block d-md-none"><span class="text-dark d-block rounded font-weight-bold">{{ post.author.username }}<small class="d-block">{{ post.author.roles[0] }}</small></span></div>
+                </div>
+            </div>
+            <hr class="my-0">
+            <div class="row">
+                <div class="col-md-3 order-1 order-md-0">
+                    <div class="py-4 px-2 d-none d-md-block"><span class="text-dark d-block rounded font-weight-bold">{{ post.author.username }}<small class="d-block">{{ post.author.roles[0] }}</small></span></div>
+                    <hr>
+                    <div class="py-4 px-2"><a href="/post/list">Retourner à la liste des articles</a></div>
+                </div>
+                <div class="col-md-9 order-0 order-md-1">
+                    <div id="post_content text_content" class="py-4">
+                        {{ post.content|raw|nl2br }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-9 offset-md-3">
+
+                    <div id="comments_section">
+                        <h2 class="h4">Liste des commentaires
+                            {% if comments|length == 1 %}
+                                <small>{{ comments|length }} commentaire</small>
+                            {% else %}
+                                <small>{{ comments|length }} commentaires</small>
+                            {% endif %}
+                        </h2>
+                        <hr>
+                        {% if user %}
+
+                            <form method="post" action="/post/{{ post.id }}/comment">
+                                <h3 class="h5 font-weight-bold mb-4">Laissez un commentaire</h3>
+                                <div class="form-group">
+                                    <label for="">Posté en tant que</label>
+                                    <span class="form-control bg-light">{{ user.username }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form[message]">Message</label>
+                                    <textarea class="form-control" name="form[message]" id=""  rows="3"></textarea>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary">Envoyer</button>
+                                </div>
+                            </form>
+                            <hr>
+                        {% endif %}
+                        <ul class="list-group">
+                            {% for comment in comments %}
+                                <li class="list-group-item">
+                                    <div class="media p-1">
+                                        <div class="media-body">
+                                            <h5 class="text-dark h6 font-weight-bold mb-0">{{ comment.author.username }} - {% if comment.status == 1 %} <span class="badge badge-dark">Validé par l'administrateur</span> {% endif %}</h5>
+                                            <small class="d-block mb-3">{{ comment.createdAt|date('d m Y à H:i:s') }}</small>
+                                            <p class="mb-0">{{ comment.message|nl2br }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="../../assets/js/bootstrap.js"></script>
+{% endblock javascripts %}
+

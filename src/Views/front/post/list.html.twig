@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome5-overrides.min.css">
+
+    <style>
+        @media screen and (min-width: 768px) {
+            .nav-item {
+                position: relative;
+            }
+            .nav-link.active:before
+            {
+                content: '';
+                width: 0.45rem;
+                height: 0.45rem;
+                background: #333;
+                position: absolute;
+                border-radius: 50%;
+                bottom: -0.45rem;
+                left: calc(50% - (0.45rem / 2))
+            }
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block body %}
+    <div class="container " >
+        <section class="mt-5">
+            <div class="row my-5">
+                <div class="col-12">
+                    <h1 class="fw-bolder display-5 text-dark font-weight-bold">Derniers articles</h1>
+                    <p class="lead text-black-50">Toutes les dernières nouvelles dans le monde.</p>
+                </div>
+
+            </div>
+            <hr class="m-0">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="list-unstyled">
+                        {% for post in posts|reverse %}
+                            <li class=" my-5">
+                                <div class="row">
+                                    <div class="col-12 col-md-3">
+                                            {{ post.createdAt|date('d M Y') }}
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <h2 class="h4 fw-bolder mb-4">{{ post.title }}</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 offset-md-3 col-md-9">
+                                        <p class="text-muted">{{ post.excerpt }}</p>
+                                        <a href="/post/{{ post.id }}/show" class="text-success">En savoir plus</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr class="m-0">
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}
+

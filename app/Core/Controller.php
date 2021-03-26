@@ -42,7 +42,7 @@ class Controller
      */
     public function render($template, $parameter = [])
     {
-        try {
+        try {$this->get('twig')->addGlobal('user', $this->getUser());
 
             $content = $this->get('twig')->render($template, $parameter);
             $response = new Response();
@@ -122,7 +122,12 @@ class Controller
      */
     public function getUser()
     {
-        return isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        if(isset($_SESSION['user']))
+        {
+            $this->get('twig')->addGlobal('user', $_SESSION['user']);
+            return $_SESSION['user'];
+        }
+        return null;
     }
 
     /**
