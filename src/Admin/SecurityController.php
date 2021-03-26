@@ -62,7 +62,7 @@ class SecurityController extends Controller
             }
             else {
                 //TODO: On redirigera vers la page administration
-                return $this->redirectToRoute('admin_post_list');
+                return new Response('Page administration', 500);
             }
         }
         else {
