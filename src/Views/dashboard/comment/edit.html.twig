@@ -1,0 +1,82 @@
+{% extends 'dashboard/base_layout.html.twig' %}
+{% block stylsheets %}
+    {{ parent() }}
+
+{% endblock stylsheets %}
+{% block body %}
+
+    <h3 class="text-dark mb-4">Modifier le commentaire</h3>
+    <form method="post" class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">Information du commentaire</p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="mb-5">
+                            <h2 class="h6">Relié à l'article</h2>
+                            <span class="p-3 rounded bg-light d-block d-flex justify-content-between align-items-center">
+                                        <a class="btn btn-link" href="/intranet/post/{{ form.post.id }}/edit">{{ form.post.title }}</a>
+                                        <a class="btn btn-outline-secondary" href="/intranet/post/{{ form.post.id }}/edit">Voir l'article</a>
+                                    </span>
+                        </div>
+
+                        {% include 'dashboard/comment/form/_form.html.twig' with {'route': route} %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">Modération</p>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+
+                            <label>Status
+                            {#{% if comment.status == 0 %}
+                                <span class="badge badge-warning">En attente de validation</span>
+                            {% else %}
+                                <span class="badge badge-success">Publié</span>
+                            {% endif %}#}
+                            </label>
+                            <select name="form[status]" id="" class="form-control">
+                                <optgroup label="Sélectionner un auteur">
+                                    <option {% if form.status == 0 %} selected {% endif %} value="0">En attente de validation</option>
+                                    <option {% if form.status == 1 %} selected {% endif %} value="1">Publié</option>
+
+                                </optgroup>
+                            </select>
+                            <small>Etat de la publication</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">Publication</p>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group"><label>Auteur</label>
+                            <span type="text" class="form-control bg-light" disabled style="cursor: not-allowed"> {{ form.author.username }}</span>
+                            <small>Auteur du commentaire</small>
+                        </div>
+                    </form>
+                    <hr>
+                    <h6>Information</h6>
+                    <div><span class="font-weight-bold d-block">Date de modification</span><span class="p-2 bg-light d-block rounded mt-2"><i class="fa fa-clock-o mr-2"></i>{{ form.createdAt|date('d M Y à H:i:s') }}</span></div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock body %}
+
+{% block javascripts %}
+    {{  parent() }}
+
+{% endblock javascripts %}
