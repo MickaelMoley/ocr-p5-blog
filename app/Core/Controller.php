@@ -40,7 +40,7 @@ class Controller
      * @param $template
      * @param null $parameter
      */
-    public function render($template, $parameter = null)
+    public function render($template, $parameter = [])
     {
         try {
 
@@ -96,6 +96,7 @@ class Controller
         return new FormHandler($class, $data);
     }
 
+                         
 
 
 }
