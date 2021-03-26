@@ -40,6 +40,7 @@ class Application
      */
     public function process()
     {
+        session_start(); //On démarre la session ou reprendre la session existant au cas où un utilisateur s'est identifié
         $this->router = new AltoRouter();
         $this->loadRoutesConfiguration($this->getRootDir().'/routes.yaml');
         $this->loadEntityManagerConfiguration();
