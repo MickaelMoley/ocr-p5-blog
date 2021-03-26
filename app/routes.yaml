@@ -29,3 +29,34 @@ routes:
     class: App\Admin\SecurityController
     action: logout
     name: logout_page
+
+    #Administration des pages 'Articles'
+  admin_post_list:
+    method: 'GET'
+    path: '/intranet/post/list'
+    class: App\Admin\PostControllerAdmin
+    action: list
+    name: admin_post_list
+
+  admin_post_create:
+    method: 'GET, POST'
+    path: '/intranet/post/create'
+    class: App\Admin\PostControllerAdmin
+    action: create
+    name: admin_post_create
+
+  admin_post_edit:
+    method: 'GET, POST'
+    path: '/intranet/post/[i:id]/edit'
+    class: App\Admin\PostControllerAdmin
+    action: edit
+    name: admin_post_edit
+
+  admin_post_delete:
+    method: 'GET'
+    path: '/intranet/post/[i:id]/delete'
+    class: App\Admin\PostControllerAdmin
+    action: delete
+    name: admin_post_delete
+
+  
