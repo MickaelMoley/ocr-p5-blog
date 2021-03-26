@@ -114,7 +114,7 @@ class User
      */
     public function setRoles(string $roles): void
     {
-        if(!in_array($roles, $this->getRoles()))
+        if(!in_array($roles, (array)$this->roles))
         {
             $this->roles[] = $roles;
         }

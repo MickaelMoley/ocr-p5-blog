@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block body %}
+    <main>
+        <div class="container">
+            <div class="row mt-5 justify-content-center">
+                <div class="col-md-9 col-lg-12 col-xl-10">
+                    <div class="card shadow-lg o-hidden border-0 my-5">
+                        <div class="card-body p-0">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h4 class="text-dark mb-4">Bienvenue !</h4>
+                                        </div>
+                                       {% if error is defined %}
+                                         <div class="alert alert-danger">
+                                            {{ error }}
+                                        </div>
+                                       {% endif %}
+                                        <form class="user" method="post">
+                                            <div class="form-group">
+                                                <label for="form[email]">Adresse mail</label>
+                                                <input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Entrez votre adresse mail" name="form[email]">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="form[password]">Mot de passe</label>
+                                                <input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="*******" name="form[password]">
+                                            </div><button class="btn btn-primary btn-block text-white btn-user" type="submit" name="btn_submit">Se connecter</button>
+                                           <hr>
+                                        </form>
+                                        <div class="text-center"><a class="small" href="register">Créer mon compte</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}
+

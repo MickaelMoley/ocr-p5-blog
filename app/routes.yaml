@@ -8,3 +8,24 @@ routes:
 #    class: FakeNamespace\MySuperBlog\Controller\FakeController#fakeMethod
 #    action: test
 #    name: test_page
+
+  security_controller_register:
+    method: 'GET|POST'
+    path: '/register'
+    class: App\Admin\SecurityController
+    action: register
+    name: register_page
+
+  security_controller_login:
+    method: 'GET|POST'
+    path: '/login'
+    class: App\Admin\SecurityController
+    action: login
+    name: login_page
+
+  security_controller_logout:
+    method: 'GET|POST'
+    path: '/logout'
+    class: App\Admin\SecurityController
+    action: logout
+    name: logout_page

@@ -96,7 +96,51 @@ class Controller
         return new FormHandler($class, $data);
     }
 
-                         
+    /**
+     * Fonction permettant de rediriger l'utilisateur vers une nouvelle page
+     * @param $name
+     * @param array $params
+     * @return Response
+     */
+    public function redirectToRoute($name, $params = [])
+    {
+        try {
+            return new RedirectResponse($this->get('router')->generate($name, $params));
+        } catch (\Exception $e) {
+            if($this->getEnvironment() === 'dev'){
+                return new Response($e->getMessage(), 500);
+            }
+            else {
+                return new Response(null, 500);
+            }
+        }
+    }
+
+    /**
+     * Fonction permettant de récupérer l'utilisateur courant depuis la session
+     * @return mixed|null
+     */
+    public function getUser()
+    {
+        return isset($_SESSION['user']) ? $_SESSION['user'] : null;
+    }
+
+    /**
+     * Fonction permettant de vérifier
+     * que l'utilisateur ait les droits nécessaire afin d'accéder à une page
+     * @param string $role
+     * @return bool|null
+     */
+    public function isGranted(string $role)
+    {
+        if($this->getUser())
+        {
+            return in_array($role, $this->getUser()->getRoles());
+        }
+        else {
+            return null;
+        }
+    }
 
 
 }
