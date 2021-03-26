@@ -66,23 +66,23 @@ routes:
     action: list
     name: admin_comment_list
 
-    admin_comment_create:
-      method: 'GET, POST'
-      path: '/intranet/post/[i:id]/comment/create'
-      class: App\Admin\CommentControllerAdmin
-      action: create
-      name: admin_comment_create
+  admin_comment_create:
+    method: 'GET, POST'
+    path: '/intranet/post/[i:id]/comment/create'
+    class: App\Admin\CommentControllerAdmin
+    action: create
+    name: admin_comment_create
 
-    admin_comment_edit:
-      method: 'GET, POST'
-      path: '/intranet/comment/[i:id]/edit'
-      class: App\Admin\CommentControllerAdmin
-      action: edit
-      name: admin_comment_edit
+  admin_comment_edit:
+    method: 'GET, POST'
+    path: '/intranet/comment/[i:id]/edit'
+    class: App\Admin\CommentControllerAdmin
+    action: edit
+    name: admin_comment_edit
 
-    admin_comment_delete:
-      method: 'GET'
-      path: '/intranet/comment/[i:id]/delete'
-      class: App\Admin\CommentControllerAdmin
-      action: delete
-      name: admin_comment_delete
+  admin_comment_delete:
+    method: 'GET'
+    path: '/intranet/comment/[i:id]/delete'
+    class: App\Admin\CommentControllerAdmin
+    action: delete
+    name: admin_comment_delete
