@@ -2,6 +2,8 @@
 namespace Root\Core;
 
 use Exception;
+use Root\Form\FormHandler;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Error\LoaderError;
@@ -82,4 +84,18 @@ class Controller
             throw new Exception(null);
         }
     }
+
+    /**
+     * Fonction permettant de gérer les données du formulaire
+     * @param $class
+     * @param $data
+     * @return FormHandler
+     */
+    public function createForm($class, $data)
+    {
+        return new FormHandler($class, $data);
+    }
+
+
+
 }
