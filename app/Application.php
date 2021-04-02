@@ -2,7 +2,6 @@
 namespace Root;
 
 use Doctrine\Common\Cache\FilesystemCache;
-use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\HttpFoundation\Request;
 use AltoRouter;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +45,6 @@ class Application
         $this->loadRoutesConfiguration($this->getRootDir().'/routes.yaml');
         $this->loadEntityManagerConfiguration();
         $this->loadTwig();
-        $this->loadMailer();
 
         $match = $this->router->match();
 
@@ -182,14 +180,6 @@ class Application
          * Je l'ajoute à ma liste de dépendances
          */
         $this->dependencies['twig'] = $twig;
-    }
-
-    /**
-     * Fonction permettant de charger la librarie d'envoie de mails
-     */
-    public function loadMailer()
-    {
-        $this->dependencies['mailer'] = new PHPMailer();
     }
     /**
      * Fonction qui nous retourne le chemin du dossier courant

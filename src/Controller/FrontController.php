@@ -3,8 +3,6 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use Root\Core\Controller;
 
 class FrontController extends Controller
@@ -100,40 +98,17 @@ class FrontController extends Controller
         $status = [];
 
         if(isset($data)){
-            $mail = $this->get('mailer');
             $to      = 'mickaaos440@gmail.com';
             $subject = 'Demande de contact';
             $message = $data['message'];
-            $replyTo = $data['mail'];
 
 
-            try {
-                //Parametre serveur
-                $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'mickaaos440@gmail.com  ';
-                $mail->Password   = 'Hallucinations0617!Gek';
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
-
-                //Recipients
-                $mail->setFrom('contact@blogocr.fr', 'Formulaire de contact BlogOCR');
-                $mail->addAddress('mickael.moley@outlook.com');
-                $mail->addReplyTo($replyTo, $data['name']); // L'utilisateur qui a soumis le commentaire
-
-
-                //Content
-                $mail->isHTML(true);    //On envoie le mail au format HTML
-                $mail->Subject = 'Demande de contact';
-                $mail->Body    = $this->render('emails/contact.html.twig', [
-                    'data' => $data
-                ]);
-
-                $mail->send();
-                return $this->render('front/contact.html.twig', ['flash' => ['status' => 'success', 'message' => 'Votre demande de contact a bien été transmis.']]);
-            } catch (Exception $e) {
-                return $this->render('front/contact.html.twig', ['flash' => ['status' => 'error', 'message' => "Une erreur s'est produite."]]);
+            if(mail($to, $subject, $message))
+            {
+                $status = ['status' => 'success', 'message' => 'Votre demande de contact a bien été transmis.'];
+            }
+            else {
+                $status = ['status' => 'error', 'message' => "Une erreur s'est produite lors de la transmission du message."];
             }
         }
 
