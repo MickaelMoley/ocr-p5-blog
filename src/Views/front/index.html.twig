@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        @media screen and (min-width: 768px) {
+            main {
+                min-height: 100vh !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block body %}
+    <main class="mt-5 mt-md-0">
+        <section class="text-center py-md-5 mt-5 mt-md-0"><img class="rounded-circle img-fluid" src="https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Brown" loading="lazy">
+            <h2 class="text-dark font-weight-bold mb-3 mt-5">Mickaël Moley</h2>
+            <p class="text-muted">Designer web &amp; Développeur d’Application</p><span><i class="fa fa-map-marker mr-2"></i>Orléans, France</span>
+            <div class="mt-4">
+                <a class="rounded p-2 px-3 mr-2" title="Voir mon profil Twitter" href="https://twitter.com/MickaelMly" style="background: var(--light);"><i class="fa fa-twitter"></i></a>
+                <a class="rounded p-2 px-3" title="Voir mon profil Linkedin" href="https://www.linkedin.com/in/mickael-moley/" style="background: var(--light);"><i class="fa fa-linkedin"></i></a>
+                <a class="rounded p-2 px-3" title="Voir mon profil Github" href="https://github.com/MickaelMoley" style="background: var(--light);"><i class="fa fa-github"></i></a>
+                <span> - </span>
+                <a class="rounded p-2 bg-primary text-white" href="#"><i class="fas fa-file-pdf mr-2 "></i>CV</a>
+            </div>
+            <div class="mt-5 p-5 bg-light rounded">
+                <h3 class="font-weight-bolder text-dark">“ Je ne sais pas quoi dire, j’avais prévu un beau discours mais bon, autant commencer direct. ”</h3>
+            </div>
+        </section>
+{#   COLLAPSE EXPERIENCE     #}
+    </main>
+    <footer>
+        <div class="container text-center">
+            <p>2021 Copyright - Blog - <a href="/login">Administration</a></p>
+        </div>
+    </footer>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}
+

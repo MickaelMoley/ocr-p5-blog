@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        main {
+            min-height: 100%;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block body %}
+    <main>
+
+        <section>
+            <div class="container mt-5 py-5">
+               <div class="row justify-content-md-center">
+                   <div class="col-12 col-md-6">
+                       <div class="container">
+                           {% if flash is defined %}
+                               <div class="alert alert-{{ flash['status'] }}">
+                                   {{ flash['message'] }}
+                               </div>
+                           {% endif %}
+                       </div>
+                       <div class="card">
+                           <div class="card-body">
+                               <h2 class="card-title">Contact</h2>
+                               <h6 class="text-muted card-subtitle mb-2">Vous avez des questions ?</h6>
+                               <hr>
+                               <form method="post">
+                                   <div class="form-group"><label for="form[name]">Nom</label>
+                                       <input class="form-control" type="text" name="form[name]">
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="form[mail]">Adresse mail</label>
+                                       <input class="form-control" type="text" name="form[mail]">
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="form[message]">Message</label>
+                                       <textarea class="form-control" name="form[message]"></textarea>
+                                   </div>
+                                   <div><button class="btn btn-primary" type="submit" >Envoyer</button></div>
+                               </form>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+            </div>
+        </section>
+{#   COLLAPSE EXPERIENCE     #}
+    </main>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}
+

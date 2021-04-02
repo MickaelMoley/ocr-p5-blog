@@ -1,0 +1,22 @@
+
+{# <form method="post"> #}
+    <div class="form-group">
+        <label for="form[message]">Message</label>
+        <textarea class="form-control" type="text" name="form[message]" rows="10">{{ form.message }}</textarea>
+    </div>
+{#    <div class="form-group">#}
+{#        <label for="form[excerpt]">Extrait</label>#}
+{#        <textarea class="form-control" name="form[excerpt]" id="" cols="30" rows="3">{{ form.excerpt }}</textarea>#}
+{#        <small class="form-text text-muted">Un extrait d'article</small>#}
+{#    </div>#}
+{#    <div class="form-group">#}
+{#        <label for="form[content]">Contenu</label>#}
+{#        <textarea class="form-control" name="form[content]" id="" cols="30" rows="10">{{ form.content|nl2br }}</textarea>#}
+{#        <small class="form-text text-muted">Un extrait d'article</small>#}
+{#    </div>#}
+    <div class="mt-4">
+        <a class="btn btn-outline-danger mr-2" href="/intranet/comment/{{ form.id }}/delete" name="btn_delete">Supprimer
+            ce commentaire </a>
+        <button class="btn btn-primary" type="submit" name="btn_submit">Enregistrer les modifications</button>
+    </div>
+{# </form> #}

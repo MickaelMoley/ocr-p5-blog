@@ -2,6 +2,8 @@
 namespace Root\Core;
 
 use Exception;
+use Root\Form\FormHandler;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Error\LoaderError;
@@ -20,11 +22,10 @@ class Controller
     protected $response;
     protected $dependencies;
 
-    public function __construct($dependencies, Request $request, Response $response)
+    public function __construct($dependencies, Request $request)
     {
         $this->dependencies = $dependencies;
         $this->request = $request;
-        $this->response = $response;
     }
 
     public function getEnvironment()
@@ -39,9 +40,9 @@ class Controller
      * @param $template
      * @param null $parameter
      */
-    public function render($template, $parameter = null)
+    public function render($template, $parameter = [])
     {
-        try {
+        try {$this->get('twig')->addGlobal('user', $this->getUser());
 
             $content = $this->get('twig')->render($template, $parameter);
             $response = new Response();
@@ -83,4 +84,68 @@ class Controller
             throw new Exception(null);
         }
     }
+
+    /**
+     * Fonction permettant de gérer les données du formulaire
+     * @param $class
+     * @param $data
+     * @return FormHandler
+     */
+    public function createForm($class, $data)
+    {
+        return new FormHandler($class, $data);
+    }
+
+    /**
+     * Fonction permettant de rediriger l'utilisateur vers une nouvelle page
+     * @param $name
+     * @param array $params
+     * @return Response
+     */
+    public function redirectToRoute($name, $params = [])
+    {
+        try {
+            return new RedirectResponse($this->get('router')->generate($name, $params));
+        } catch (\Exception $e) {
+            if($this->getEnvironment() === 'dev'){
+                return new Response($e->getMessage(), 500);
+            }
+            else {
+                return new Response(null, 500);
+            }
+        }
+    }
+
+    /**
+     * Fonction permettant de récupérer l'utilisateur courant depuis la session
+     * @return mixed|null
+     */
+    public function getUser()
+    {
+        if(isset($_SESSION['user']))
+        {
+            $this->get('twig')->addGlobal('user', $_SESSION['user']);
+            return $_SESSION['user'];
+        }
+        return null;
+    }
+
+    /**
+     * Fonction permettant de vérifier
+     * que l'utilisateur ait les droits nécessaire afin d'accéder à une page
+     * @param string $role
+     * @return bool|null
+     */
+    public function isGranted(string $role)
+    {
+        if($this->getUser())
+        {
+            return in_array($role, $this->getUser()->getRoles());
+        }
+        else {
+            return null;
+        }
+    }
+
+
 }

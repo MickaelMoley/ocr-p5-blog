@@ -1,0 +1,81 @@
+{% extends 'dashboard/base_layout.html.twig' %}
+{% block stylsheets %}
+    {{ parent() }}
+
+{% endblock stylsheets %}
+{% block body %}
+
+
+    <h3 class="text-dark mb-4">Création de l'article</h3>
+    <form method="post" class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">Information de l'article</p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Gestion de l'article</a></li>
+{#                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Gestion des commentaires</a></li>#}
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active py-5" role="tabpanel" id="tab-1">
+                                {% include 'dashboard/post/form/_form.html.twig' with {'route': route.name} %}
+                            </div>
+                           {# <div class="tab-pane " role="tabpanel" id="tab-2">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="media"><img class="mr-3">
+                                            <div class="media-body">
+                                                <h5>Media Heading</h5>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus nisl ac diam feugiat, non vestibulum libero posuere. Vivamus pharetra leo non nulla egestas, nec malesuada orci finibus. </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item"><span>List Group Item 2</span></li>
+                                    <li class="list-group-item"><span>List Group Item 3</span></li>
+                                </ul>
+                                <p>Content for tab 2.</p>
+                            </div>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">Publication</p>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group"><label>Auteur</label>
+                            <select class="form-control" name="form[author]" id="">
+                                <optgroup label="Sélectionner un auteur">
+
+
+                                    {% for author in users %}
+                                        <option  {% if user.id == author.id %} selected {% endif %} value="{{ author.id }}">{{ author.username }}</option>
+                                    {% endfor %}
+
+                                </optgroup>
+
+
+                            </select>
+                            <small class="form-text text-muted">Modifier l'auteur de l'article</small>
+                        </div>
+                    </form>
+                    <hr>
+                    <h6>Information</h6>
+                    <div><span class="font-weight-bold d-block">Date de modification</span><span class="p-2 bg-light d-block rounded mt-2"><i class="fa fa-clock-o mr-2"></i>{{ form.updatedAt|date('d M Y à H:i:s') }}</span></div>
+                </div>
+            </div>
+        </div>
+
+{% endblock body %}
+
+{% block javascripts %}
+    {{  parent() }}
+
+{% endblock javascripts %}

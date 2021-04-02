@@ -1,6 +1,8 @@
 <?php
 namespace Root;
 
+use Doctrine\Common\Cache\FilesystemCache;
+use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Component\HttpFoundation\Request;
 use AltoRouter;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,10 +41,12 @@ class Application
      */
     public function process()
     {
+        session_start(); //On démarre la session ou reprendre la session existant au cas où un utilisateur s'est identifié
         $this->router = new AltoRouter();
         $this->loadRoutesConfiguration($this->getRootDir().'/routes.yaml');
         $this->loadEntityManagerConfiguration();
         $this->loadTwig();
+        $this->loadMailer();
 
         $match = $this->router->match();
 
@@ -148,7 +152,7 @@ class Application
             }
 
 
-            $config = Setup::createAnnotationMetadataConfiguration($entityPath,$debug,null, null, false);
+            $config = Setup::createAnnotationMetadataConfiguration($entityPath,$debug,$this->getRootDir().$this->config['orm']['proxy_path'], new FilesystemCache($this->getRootDir().$this->config['orm']['cache_path']), false);
             try {
                 return $this->dependencies['entityManager'] = EntityManager::create($this->config['database'], $config);
             } catch (\Doctrine\ORM\ORMException $e) {
@@ -178,6 +182,14 @@ class Application
          * Je l'ajoute à ma liste de dépendances
          */
         $this->dependencies['twig'] = $twig;
+    }
+
+    /**
+     * Fonction permettant de charger la librarie d'envoie de mails
+     */
+    public function loadMailer()
+    {
+        $this->dependencies['mailer'] = new PHPMailer();
     }
     /**
      * Fonction qui nous retourne le chemin du dossier courant

@@ -8,3 +8,117 @@ routes:
 #    class: FakeNamespace\MySuperBlog\Controller\FakeController#fakeMethod
 #    action: test
 #    name: test_page
+
+  security_controller_register:
+    method: 'GET|POST'
+    path: '/register'
+    class: App\Admin\SecurityController
+    action: register
+    name: register_page
+
+  security_controller_login:
+    method: 'GET|POST'
+    path: '/login'
+    class: App\Admin\SecurityController
+    action: login
+    name: login_page
+
+  security_controller_logout:
+    method: 'GET|POST'
+    path: '/logout'
+    class: App\Admin\SecurityController
+    action: logout
+    name: logout_page
+
+    #Administration des pages 'Articles'
+  admin_post_list:
+    method: 'GET'
+    path: '/intranet/post/list'
+    class: App\Admin\PostControllerAdmin
+    action: list
+    name: admin_post_list
+
+  admin_post_create:
+    method: 'GET, POST'
+    path: '/intranet/post/create'
+    class: App\Admin\PostControllerAdmin
+    action: create
+    name: admin_post_create
+
+  admin_post_edit:
+    method: 'GET, POST'
+    path: '/intranet/post/[i:id]/edit'
+    class: App\Admin\PostControllerAdmin
+    action: edit
+    name: admin_post_edit
+
+  admin_post_delete:
+    method: 'GET'
+    path: '/intranet/post/[i:id]/delete'
+    class: App\Admin\PostControllerAdmin
+    action: delete
+    name: admin_post_delete
+
+  admin_comment_list:
+    method: 'GET'
+    path: '/intranet/comment/list'
+    class: App\Admin\CommentControllerAdmin
+    action: list
+    name: admin_comment_list
+
+  admin_comment_create:
+    method: 'GET, POST'
+    path: '/intranet/post/[i:id]/comment/create'
+    class: App\Admin\CommentControllerAdmin
+    action: create
+    name: admin_comment_create
+
+  admin_comment_edit:
+    method: 'GET, POST'
+    path: '/intranet/comment/[i:id]/edit'
+    class: App\Admin\CommentControllerAdmin
+    action: edit
+    name: admin_comment_edit
+
+  admin_comment_delete:
+    method: 'GET'
+    path: '/intranet/comment/[i:id]/delete'
+    class: App\Admin\CommentControllerAdmin
+    action: delete
+    name: admin_comment_delete
+
+  #Front Route
+
+  front_controller_index:
+    method: 'GET'
+    path: '/'
+    class: App\Controller\FrontController
+    action: index
+    name: home_page
+
+  front_controller_contact:
+    method: 'GET|POST'
+    path: '/contact'
+    class: App\Controller\FrontController
+    action: contact
+    name: contact_page
+  front_controller_post_list:
+    method: 'GET'
+    path: '/post/list'
+    class: App\Controller\FrontController
+    action: listPost
+    name: list_front_post
+
+  front_controller_post_show:
+    method: 'GET'
+    path: '/post/[i:id]/show'
+    class: App\Controller\FrontController
+    action: showPost
+    name: show_front_post
+
+  front_controller_comment_create:
+    method: 'POST'
+    path: '/post/[i:id]/comment'
+    class: App\Controller\FrontController
+    action: createComment
+    name: create_front_comment

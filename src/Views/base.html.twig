@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="view">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> {% block title %} {% endblock title %}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+            <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+            <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+            <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+
+            <style>
+                @media screen and (min-width: 768px) {
+                    .nav-item {
+                        position: relative;
+                    }
+                    .nav-link.active:before
+                    {
+                        content: '';
+                        width: 0.45rem;
+                        height: 0.45rem;
+                        background: #333;
+                        position: absolute;
+                        border-radius: 50%;
+                        bottom: -0.45rem;
+                        left: calc(50% - (0.45rem / 2))
+                    }
+                }
+            </style>
+        {% endblock stylesheets %}
+    </head>
+    <body>
+    <header>
+        <nav class="navbar navbar-light navbar-expand-md fixed-top">
+            <div class="container"><a class="navbar-brand" href="#">Mon Blog</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link {% if route.name == 'home_page' %} active {% endif %}" href="/">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link {% if route.name == 'list_front_post' %} active {% endif %}" href="/post/list">Blog</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav mx-aut">
+                        {% if user is defined and user is not null%}
+                            <li class="nav-item">
+                                <a href="/logout" class="nav-link text-danger">Se déconnecter</a>
+                            </li>
+
+
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="/login" class="nav-link">Se connecter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/register" class="nav-link">S'inscrire</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="/contact" class="btn btn-primary">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block body %}{% endblock body %}
+
+    {% block javascripts %}
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/chart.min.js"></script>
+        <script src="assets/js/bs-init.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+        <script src="assets/js/theme.js"></script>
+    {% endblock %}
+    </body>
+</html>
