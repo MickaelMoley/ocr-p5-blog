@@ -23,8 +23,8 @@ class CommentControllerAdmin extends Controller
     public function list($id = null)
     {
         if($this->isGranted('ROLE_SUPER_ADMIN') || $this->isGranted('ROLE_COLLABORATOR')) {
-            $em = $this->get('entityManager');
-            $comments = $em->getRepository(Comment::class)->findAll();
+            $entityManager = $this->get('entityManager');
+            $comments = $entityManager->getRepository(Comment::class)->findAll();
 
 
             return $this->render('dashboard/comment/list.html.twig', [
@@ -41,12 +41,12 @@ class CommentControllerAdmin extends Controller
     public function create($id = null)
     {
         if($this->isGranted('ROLE_SUPER_ADMIN') || $this->isGranted('ROLE_COLLABORATOR')) {
-            $em = $this->get('entityManager');
+            $entityManager = $this->get('entityManager');
             $comment = new Comment();
 
 
             $user = $this->getUser();
-            $post = $em->getRepository(Post::class)->find($id);
+            $post = $entityManager->getRepository(Post::class)->find($id);
             $comment->setPost($post);
             $comment->setAuthor($user);
 
@@ -61,8 +61,8 @@ class CommentControllerAdmin extends Controller
                 $requestData = $form->getRequestData();
                 $data->setCreatedAt(new \DateTime('now'));
 
-                $em->persist($data);
-                $em->flush();
+                $entityManager->persist($data);
+                $entityManager->flush();
 
                 return $this->redirectToRoute('admin_comment_edit',  ['id' => $data->getId()]);
             }
@@ -82,8 +82,8 @@ class CommentControllerAdmin extends Controller
     public function edit($id = null)
     {
         if($this->isGranted('ROLE_SUPER_ADMIN') || $this->isGranted('ROLE_COLLABORATOR')) {
-            $em = $this->get('entityManager');
-            $comment = $em->getRepository(Comment::class)->find($id);
+            $entityManager = $this->get('entityManager');
+            $comment = $entityManager->getRepository(Comment::class)->find($id);
 
             $user = $this->getUser();
 
@@ -96,8 +96,8 @@ class CommentControllerAdmin extends Controller
                 $data = $form->getData();
                 $requestData = $form->getRequestData();
 
-                $em->persist($data);
-                $em->flush();
+                $entityManager->persist($data);
+                $entityManager->flush();
 
                 return $this->redirectToRoute('admin_comment_edit',  ['id' => $data->getId()]);
             }
@@ -120,14 +120,14 @@ class CommentControllerAdmin extends Controller
 
         if(isset($id))
         {
-            $em = $this->get('entityManager');
+            $entityManager = $this->get('entityManager');
 
-            $comment = $em->getRepository(Comment::class)->find($id);
+            $comment = $entityManager->getRepository(Comment::class)->find($id);
 
             if($comment)
             {
-                $em->remove($comment);
-                $em->flush();
+                $entityManager->remove($comment);
+                $entityManager->flush();
                 return $this->redirectToRoute('admin_comment_list');
             }
             else {

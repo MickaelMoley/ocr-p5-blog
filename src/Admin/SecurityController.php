@@ -34,11 +34,9 @@ class SecurityController extends Controller
                 $em->flush();
                 return $this->redirectToRoute('login_page');
             }
-            else {
-                return $this->render('security/register.html.twig', [
-                    'error' => 'Un utilisateur existe déjà.'
-                ]);
-            }
+            return $this->render('security/register.html.twig', [
+                'error' => 'Un utilisateur existe déjà.'
+            ]);
 
         }
 
