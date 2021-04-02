@@ -112,8 +112,8 @@ class FrontController extends Controller
                 $mail->isSMTP();
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
-                $mail->Username   = 'mickaaos440@gmail.com  ';
-                $mail->Password   = 'Hallucinations0617!Gek';
+                $mail->Username   = 'email@mail.com';
+                $mail->Password   = 'password';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
 
