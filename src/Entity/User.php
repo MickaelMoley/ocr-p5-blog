@@ -48,10 +48,6 @@ class User
         return $this->id;
     }
 
-    public function setId($id): int
-    {
-        $this->id = $id;
-    }
 
     /**
      * @return string
