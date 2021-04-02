@@ -57,11 +57,11 @@ class SecurityController extends Controller
         {
             if($this->isGranted('ROLE_USER'))
             {
-                //TODO: On redirigera vers la page blog
-                return new Response('Page blog ', 500);
+                //Redirection vers la page blog
+                return $this->redirectToRoute('list_front_post');
             }
             else {
-                //TODO: On redirigera vers la page administration
+                //Redirection vers la page d'administration
                 return $this->redirectToRoute('admin_post_list');
             }
         }
