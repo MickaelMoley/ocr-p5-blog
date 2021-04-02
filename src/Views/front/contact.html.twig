@@ -12,10 +12,18 @@
 
 {% block body %}
     <main>
+
         <section>
             <div class="container mt-5 py-5">
                <div class="row justify-content-md-center">
                    <div class="col-12 col-md-6">
+                       <div class="container">
+                           {% if flash is defined %}
+                               <div class="alert alert-{{ flash['status'] }}">
+                                   {{ flash['message'] }}
+                               </div>
+                           {% endif %}
+                       </div>
                        <div class="card">
                            <div class="card-body">
                                <h2 class="card-title">Contact</h2>

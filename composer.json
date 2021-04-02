@@ -18,6 +18,8 @@
         "symfony/var-dumper": "^5.2",
         "twig/twig": "^3.3",
         "altorouter/altorouter": "^2.0",
-        "doctrine/orm": "^2.8"
+        "doctrine/orm": "^2.8",
+      "ext-yaml": "*",
+        "phpmailer/phpmailer": "^6.4"
     }
 }
