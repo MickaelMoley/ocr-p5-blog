@@ -4,12 +4,12 @@ Welcome to this project 5 of the DA course - Project 5.
 We are going to see all the steps in order to install this project locally.
 
 
-# Installation du projet en local
+# Local installation of the project
 
 First of all, you have to clone the project locally
 
     git clone git@github.com:MickaelMoley/ocr-p5-blog.git 
-## Installation des dépendences
+## Installation of dependencies
 To install the project libraries, run the following command **at the root of the project**
 
     composer install
@@ -30,7 +30,7 @@ then modify the following lines to match your database configuration:
       driver: pdo_mysql  
       user: 'yourusername'
       password: 'yourpassword'
-      dbname: 'yourdatabaename'
+      dbname: 'yourdatabasename'
 Finally we need to synchronize our database with our project.
 
 In case the database is not yet created, you can create it by following this command:
@@ -40,4 +40,19 @@ In case of modification/implementation, the following command must be run to syn
     
     php vendor\doctrine\orm\bin\doctrine orm:schema-tool:update --force
 
+## Start
 
+
+As it is a PHP project, it is necessary to launch a web server. To do this, you have to go to the `public` folder **at the root of the project**. 
+
+    cd public/
+
+and run the following command : 
+
+    php -S localhost:8000
+
+
+This will launch a server on our local machine on port `8000`.
+
+Then, we must access the given URL: [localhost:8000](localhost:8000)
+The home page should be displayed.
