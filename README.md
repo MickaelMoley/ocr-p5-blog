@@ -1,5 +1,7 @@
 # Welcome to project 5 of the DA course
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/746fa6585ef643dea96f30dd5bef091f)](https://app.codacy.com/gh/MickaelMoley/ocr-p5-blog?utm_source=github.com&utm_medium=referral&utm_content=MickaelMoley/ocr-p5-blog&utm_campaign=Badge_Grade_Settings)
+
 Welcome to this project 5 of the DA course - Project 5.
 We are going to see all the steps in order to install this project locally.
 
